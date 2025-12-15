@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Percy Jackson y el ladrón del rayo",
+    "authorId": 1,
+    "publisherId": 1,
+    "year": 2005,
+    "genre": "Fantasía"
+  },
+  {
+    "id": 2,
+    "title": "Donde no puedas encontrarme",
+    "authorId": 2,
+    "publisherId": 2,
+    "year": 2024,
+    "genre": "Romance juvenil"
+  }
+]
