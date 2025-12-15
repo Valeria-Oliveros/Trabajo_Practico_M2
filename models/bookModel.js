@@ -1,3 +1,9 @@
+/*****************************************************
+ * MÓDULOS DE LIBROS - BOOK API
+ * Lee, guarda y agrega libros usando Node.js
+ * Datos en /data/books.json
+ *****************************************************/
+
 const fs = require("fs");
 const path = require("path");
 

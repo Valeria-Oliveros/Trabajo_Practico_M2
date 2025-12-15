@@ -1,3 +1,9 @@
+/*****************************************************
+ * MÓDULOS DE AUTORES - BOOK API
+ * Lee, guarda y agrega autores usando Node.js
+ * Datos en /data/authors.json
+ *****************************************************/
+
 const fs = require("fs");
 const path = require("path");
 

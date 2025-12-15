@@ -1,3 +1,9 @@
+/*****************************************************
+ * MÓDULOS DE EDITORIALES - BOOK API
+ * Lee, guarda y agrega editoriales usando Node.js
+ * Datos en /data/publishers.json
+ *****************************************************/
+
 const fs = require("fs");
 const path = require("path");
 
