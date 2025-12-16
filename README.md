@@ -2,6 +2,8 @@
 
 Proyecto integrador desarrollado en Node.js que implementa una **API de libros, autores y editoriales** utilizando comunicación TCP mediante el módulo `net`, siguiendo el patrón MVC y persistiendo datos en archivos JSON.
 
+## Integrantes: Valeria Oliveros, Yaneri Bolige, Aketzalli Alonso.
+
 ---
 
 ## Estructura del proyecto
