@@ -2,7 +2,7 @@
  * MÓDULOS DE LIBROS - BOOK API
  * Lee, guarda y agrega libros usando Node.js
  * Datos en /data/books.json
- *****************************************************/
+*****************************************************/
 
 const fs = require("fs");
 const path = require("path");
@@ -27,6 +27,7 @@ function addBook(newBook) {
     return newBook;
 }
 
+// Exporta las funciones para ser usadas en otros módulos
 module.exports = {
   readAllBooks,
   addBook,

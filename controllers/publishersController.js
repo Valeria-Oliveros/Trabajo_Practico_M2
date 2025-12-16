@@ -14,6 +14,7 @@ function addPublisher(publisher) {
   return publishersModel.addPublisher(publisher);
 }
 
+// Exporta las funciones para ser usadas en otros módulos
 module.exports = {
   getPublishers,
   addPublisher

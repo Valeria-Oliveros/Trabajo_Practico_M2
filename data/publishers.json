@@ -8,15 +8,5 @@
     "id": 2,
     "name": "Esencia",
     "city": "Barcelona"
-  },
-  {
-    "id": 3,
-    "name": "prueba 1",
-    "city": "colombia"
-  },
-  {
-    "id": 4,
-    "name": "prueba 2",
-    "city": "chile"
   }
 ]

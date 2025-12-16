@@ -7,6 +7,12 @@
 // Importar el módulo 'net' para crear un servidor TCP
 const net = require("net");
 
+const {
+  formatResponse,
+  formatError,
+  formatSuccess,
+} = require("./views/responseFormatter");
+
 // Importamos los controladores
 const { getBooks, addBook } = require("./controllers/booksController");
 const { getAuthors, addAuthor } = require("./controllers/authorsController");

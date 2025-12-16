@@ -2,7 +2,7 @@
  * MÓDULOS DE AUTORES - BOOK API
  * Lee, guarda y agrega autores usando Node.js
  * Datos en /data/authors.json
- *****************************************************/
+*****************************************************/
 
 const fs = require("fs");
 const path = require("path");
@@ -27,6 +27,7 @@ function addAuthor(newAuthor) {
     return newAuthor;
 }
 
+// Exporta las funciones para ser usadas en otros módulos
 module.exports = {
   readAllAuthors,
   addAuthor,

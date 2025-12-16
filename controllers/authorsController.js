@@ -14,6 +14,7 @@ function addAuthor(author) {
   return authorsModel.addAuthor(author);
 }
 
+// Exporta las funciones para ser usadas en otros módulos
 module.exports = {
   getAuthors,
   addAuthor

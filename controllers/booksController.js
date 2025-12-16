@@ -14,6 +14,7 @@ function addBook(book) {
   return bookModel.addBook(book);
 }
 
+// Exporta las funciones para ser usadas en otros módulos
 module.exports = {
   getBooks,
   addBook
