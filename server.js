@@ -17,6 +17,7 @@ console.log("Servidor TCP iniciado");
 //Creamos el servidor TCP
 const server = net.createServer((socket) => {
   console.log("Cliente conectado");
+  socket.write("¡Bienvenido al servidor Book API!\n");
   let buffer = "";
 
   //Recibimos y procesamos los datos ingresados por el cliente

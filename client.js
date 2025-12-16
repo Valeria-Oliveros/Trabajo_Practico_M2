@@ -18,34 +18,38 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-let conectado = false;
-
 // Conectamos al servidor
 client.connect(8080, "localhost", () => {
-    conectado = true;
-  console.log("Conectado al servidor\n");
-  console.log("¡Bienvenido al servidor Book API!\n");
-  mostrarMenuPrincipal();
+    console.log("conectandose al servidor...");
 });
 
+let servidorListo = false;
 // Escuchamos respuestas del servidor
 client.on("data", (data) => {
-  console.log("\nRespuesta del servidor:");
-  console.log(data.toString());
-  if (menuActual === "libros") menuLibros();
-  else if (menuActual === "autores") menuAutores();
-  else if (menuActual === "editoriales") menuEditoriales();
-  else mostrarMenuPrincipal();
+    const mensaje = data.toString();
+    if (!servidorListo) {
+        console.log("Conectado al servidor.");
+        console.log(mensaje);
+        servidorListo = true;
+        client.setTimeout(0);
+        mostrarMenuPrincipal();
+        return;
+    }
+    console.log("\nRespuesta del servidor:");
+    console.log(data.toString());
+    if (menuActual === "libros") menuLibros();
+    else if (menuActual === "autores") menuAutores();
+    else if (menuActual === "editoriales") menuEditoriales();
+    else mostrarMenuPrincipal();
 });
 
 // Manejo de errores y cierre de conexión
 client.on("error", (err) => {
-  console.error("Error en el cliente:", err.message);
-  console.error("Detalle:", err.message);
+  console.error("Error: el servidor dejó de responder");
   process.exit(1);
 });
 client.on("timeout", () => {
-    if (!conectado) {
+    if (!servidorListo) {
         console.error("Error: No se pudo conectar al servidor");
     }else {
         console.error("Error: El servidor dejó de responder");
