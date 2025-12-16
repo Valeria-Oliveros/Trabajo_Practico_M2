@@ -1,80 +1,180 @@
 /*****************************************************
  * CLIENTE TCP - BOOK API
- * Implementado con el módulo NET de Node.js
- * Conexión al servidor en puerto 8080
-*****************************************************/
-// Importar los módulos necesarios
+ * Interactúa con el servidor TCP
+ *****************************************************/
+
 const net = require("net");
 const readline = require("readline");
+let menuActual = "principal";
 
+// Creamos el cliente TCP
 const client = new net.Socket();
 
-// Configuramos la interfaz de lectura para la entrada estándar
+client.setTimeout(5000);
+
+// Creamos la interfaz para leer desde consola
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 });
 
-// Conectamos al servidor TCP en localhost:8080
+let conectado = false;
+
+// Conectamos al servidor
 client.connect(8080, "localhost", () => {
-  console.log("Conectado al servidor");
-  console.log("\n¡Bienvenido al servidor Book API!\n");
-  mostrarMenu();
+    conectado = true;
+  console.log("Conectado al servidor\n");
+  console.log("¡Bienvenido al servidor Book API!\n");
+  mostrarMenuPrincipal();
 });
 
-// Manejamos la respuesta del servidor
+// Escuchamos respuestas del servidor
 client.on("data", (data) => {
   console.log("\nRespuesta del servidor:");
   console.log(data.toString());
-  mostrarMenu();
+  if (menuActual === "libros") menuLibros();
+  else if (menuActual === "autores") menuAutores();
+  else if (menuActual === "editoriales") menuEditoriales();
+  else mostrarMenuPrincipal();
 });
 
-// Manejamos el cierre de la conexión y errores del client
+// Manejo de errores y cierre de conexión
+client.on("error", (err) => {
+  console.error("Error en el cliente:", err.message);
+  console.error("Detalle:", err.message);
+  process.exit(1);
+});
+client.on("timeout", () => {
+    if (!conectado) {
+        console.error("Error: No se pudo conectar al servidor");
+    }else {
+        console.error("Error: El servidor dejó de responder");
+    }
+    client.destroy();
+    process.exit(1);
+});
 client.on("close", () => {
   console.log("Conexión cerrada");
   rl.close();
 });
-client.on("error", (err) => {
-  console.error("Error en el cliente:", err.message);
-});
 
-// Función para mostrar el menú de opciones al usuario
-function mostrarMenu() {
-  console.log("\nComandos disponibles:");
-  console.log("1. GET BOOKS");
-  console.log("2. ADD BOOK");
-  console.log("3. SALIR");
+// ================= MENÚ PRINCIPAL =================
+function mostrarMenuPrincipal() {
+    menuActual = "principal";
+    console.log("\nMENÚ PRINCIPAL");
+    console.log("1. Libros");
+    console.log("2. Autores");
+    console.log("3. Editoriales");
+    console.log("4. Salir");
 
-  rl.question("> ", (opcion) => {
-    switch (opcion.trim()) {
-      case "1":
-        client.write("GET BOOKS\n");
-        break;
-
-      case "2":
-        pedirLibro();
-        break;
-
-      case "3":
-        client.write("adios\n");
-        client.end();
-        break;
-
-      default:
-        console.log("Opción inválida");
-        mostrarMenu();
-    }
-  });
-}
-
-// Función para pedir los datos de un nuevo libro al usuario
-function pedirLibro() {
-  rl.question("Título: ", (title) => {
-    rl.question("Año: ", (year) => {
-      rl.question("Género: ", (genre) => {
-        const comando = `ADD BOOK|${title}|${year}|${genre}\n`;
-        client.write(comando);
-      });
+    rl.question("> ", (opcion) => {
+        switch (opcion) {
+            case "1":
+                menuLibros();
+                break;
+            case "2":
+                menuAutores();
+                break;
+            case "3":
+                menuEditoriales();
+                break;
+            case "4":
+                console.log("Saliendo...");
+                client.end();
+                break;
+            default:
+                console.log("Opción inválida");
+                mostrarMenuPrincipal();
+        }
     });
-  });
+}
+// ================= SUBMENÚ LIBROS =================
+function menuLibros() {
+    menuActual = "libros";
+    console.log("\nMENÚ LIBROS");
+    console.log("1. GET BOOKS");
+    console.log("2. ADD BOOK");
+    console.log("3. Volver");
+
+    rl.question("> ", (opcion) => {
+        switch (opcion) {
+            case "1":
+                client.write("GET BOOKS\n");
+                break;
+            case "2":
+                rl.question("Título: ", (title) => {
+                    rl.question("Año: ", (year) => {
+                        rl.question("Género: ", (genre) => {
+                            client.write(`ADD BOOK|${title}|${year}|${genre}\n`);
+                        });
+                    });
+                });
+                break;
+            case "3":
+                mostrarMenuPrincipal();
+                break;
+            default:
+                console.log("Opción inválida");
+                menuLibros();
+        }
+    });
+}
+// ================= SUBMENÚ AUTORES =================
+function menuAutores() {
+    menuActual = "autores";
+    console.log("\nAUTORES");
+    console.log("1. GET AUTHORS");
+    console.log("2. ADD AUTHOR");
+    console.log("3. Volver");
+
+    rl.question("> ", (opcion) => {
+        switch (opcion) {
+            case "1":
+                client.write("GET AUTHORS\n");
+                break;
+            case "2":
+                rl.question("Nombre: ", (name) => {
+                    rl.question("Nacionalidad: ", (nationality) => {
+                         client.write(`ADD AUTHOR|${name}|${nationality}\n`);
+                        });
+                    });
+                break;
+            case "3":
+                 mostrarMenuPrincipal();
+                 break;
+
+            default:
+                console.log("Opción inválida");
+                menuAutores();
+        }
+    });
+}
+// ================= SUBMENÚ EDITORIALES =================
+function menuEditoriales() {
+    menuActual = "editoriales";
+    console.log("\nEDITORIALES");
+    console.log("1. GET PUBLISHERS");
+    console.log("2. ADD PUBLISHER");
+    console.log("3. Volver");
+
+    rl.question("> ", (opcion) => {
+        switch (opcion) {
+            case "1":
+                client.write("GET PUBLISHERS\n");
+                break;
+            case "2":
+                rl.question("Nombre: ", (name) => {
+                    rl.question("Ciudad: ", (city) => {
+                        client.write(`ADD PUBLISHER|${name}|${city}\n`);
+                    });
+                });
+                break;
+            case "3":
+                mostrarMenuPrincipal();
+                break;
+            default:
+                console.log("Opción inválida");
+                menuEditoriales();
+        }
+    });
 }
