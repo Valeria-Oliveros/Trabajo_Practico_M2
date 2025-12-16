@@ -111,9 +111,9 @@ Menú principal
 
 | **Libros**      | **Autores**     | **Editoriales**   |
 |-----------------|-----------------|-------------------|
-| GET BOOKS       | GET AUTHORS     | GET PUBLISHERS    |
-| ADD BOOK        | ADD AUTHOR      | ADD PUBLISHER     |
-| Salir           | Salir           | Salir             |
+| 1. GET BOOKS    | 1. GET AUTHOR   | 1. GET PUBLISHER  |
+| 2. ADD BOOK     | 2. ADD AUTHOR   | 2. ADD PUBLISHER  |
+| 3. Salir        | 3. Salir        | 3. Salir          |
 
 - **GET** permite **listar** los registros almacenados.
 - **ADD** permite **agregar** nuevos registros al sistema.
@@ -121,13 +121,20 @@ Menú principal
 Según la sección seleccionada, los datos requeridos son:
 
 - **Libros**: para agregar un libro se solicitan tres datos obligatorios:  
-  título|año|género
+    ```
+    ADD BOOK|titulo|año|género
+    ```
 
-- **Autores**: para agregar un autor se solicitan dos datos obligatorios:  
+- **Autores**: para agregar un autor se solicitan dos datos obligatorios: 
+    ```
+    ADD AUTHOR|nombre|nacionalidad
+    ```
   nombre|nacionalidad
 
 - **Editoriales**: para agregar una editorial se solicitan dos datos obligatorios:  
-  nombre|ciudad.
+    ```
+    ADD PUBLISHER|nombre|ciudad
+    ```
 
 El cliente TCP se encarga de transformar las opciones numéricas en comandos y enviarlos al servidor, el cual procesa la solicitud y devuelve la respuesta correspondiente.
 
