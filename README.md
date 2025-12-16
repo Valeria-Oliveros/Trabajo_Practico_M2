@@ -140,14 +140,14 @@ El cliente TCP se encarga de transformar las opciones numéricas en comandos y e
 
 ---
 
-## 🚨 Manejo de errores implementado
+## Manejo de errores implementado
 
 * Error si el servidor no está encendido
 * Timeout si el servidor no responde
 * Validación de formato incorrecto en comandos
 * Validación de campos numéricos (ej. año)
 
-## 🧠 Notas finales
+## Notas finales
 
 * El proyecto mantiene la conexión activa mientras el usuario navega por los menús.
 * Los IDs se generan automáticamente según el último registro existente.
